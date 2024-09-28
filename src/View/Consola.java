@@ -14,6 +14,7 @@ public class Consola {
         Scanner scanner = new Scanner(System.in);
         do {
             System.out.println("Ingrese una opcion");
+            System.out.println("0. Salir");
             System.out.println("1. Agregar album");
             System.out.println("2. Modificar album");
             System.out.println("3. Eliminar album");
