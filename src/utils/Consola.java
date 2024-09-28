@@ -26,7 +26,7 @@ public class Consola {
                 case "2":
                     break;
                 case "3":
-                    break;
+                    borrarCliente();
                 case "4":
                     mostrarClientes();
                     break;
@@ -57,6 +57,12 @@ public class Consola {
 
     private  void  mostrarClientes(){
         Util.mostrarClientes();
+    }
+
+    private  void  borrarCliente(){
+        System.out.println("Ingresar id de cliente a borrar");
+        int id = tomarNumero();
+        Util.borrarCliente(new Cliente(id,null));
     }
 
 

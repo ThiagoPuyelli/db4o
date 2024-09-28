@@ -55,7 +55,7 @@ public class Util
     }
     public static void agregarCliente(Cliente nuevo) {
         try {
-            Cliente found = findFirst(new Cliente(nuevo.getId(),nuevo.getDescripcion()));
+            Cliente found = buscarCliente(nuevo.getId());
             if ( found != null ){
                 System.out.println("El cliente ya se encuentra");
             }
@@ -88,31 +88,37 @@ public class Util
 
 
     public static void borrarCliente(Cliente aborrar) {
-        ObjectSet<Cliente> os = find(aborrar);
-        if ( os != null ) {
-            while(os.hasNext()) {
+        Cliente cliente= buscarCliente(aborrar.getId());
+        if ( cliente != null ) {
                 try {
-                    Cliente found = os.next();
-                    getDb().delete(found);
+                    getDb().delete(cliente);
                     getDb().commit();
+                    System.out.println("Cliente borrado exitosamente");
                 } catch(Exception ex) {
                     System.err.println(ex.getMessage());
                 }
             }
+        else {
+            System.out.println("El cliente no existe!");
         }
     }
 
-    public static Cliente findFirst(Cliente c) {
-        Cliente found = null;
+    public static Cliente buscarCliente(int id) {
+        Cliente encontrado = null;
         try {
-            ObjectSet<Cliente> os = getDb().queryByExample(c);
-            while(found == null && os.hasNext()) {
-                found = os.next();
+            Query query = db.query();
+            query.constrain(Cliente.class);
+            query.descend("id").constrain(id);
+            ObjectSet<Cliente> resultados = query.execute();
+            if (!resultados.isEmpty()) {
+                encontrado= resultados.get(0);
             }
+
         } catch(Exception ex) {
             System.err.println(ex.getMessage());
         }
-        return found;
+        return encontrado;
+
     }
     public static ObjectSet<Cliente> find(Cliente c) {
         ObjectSet<Cliente> os = null;
