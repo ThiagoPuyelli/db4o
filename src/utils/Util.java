@@ -4,6 +4,8 @@ import com.db4o.*;
 import com.db4o.cs.*;
 import com.db4o.query.*;
 import entidades.Cliente;
+
+
 /**
  * Esta clase encapsula las operaciones para persistir a clientes 
  * dentro de b.d. db4o
@@ -54,16 +56,37 @@ public class Util
     public static void agregarCliente(Cliente nuevo) {
         try {
             Cliente found = findFirst(new Cliente(nuevo.getId(),nuevo.getDescripcion()));
-            if ( found != null && found.getId() == nuevo.getId() )
-                found.setDescripcion(nuevo.getDescripcion());
-            else found = nuevo;
+            if ( found != null ){
+                System.out.println("El cliente ya se encuentra");
+            }
+            else{
+            found = nuevo;
             Util.getDb().store(found);
             Util.getDb().commit();
+            System.out.println("Cliente agregado exitosamente!");
+            }
         } catch(Exception ex) {
             System.err.println(ex.getMessage());
         }
 
     }
+
+
+    public static void mostrarClientes() {
+        try {
+            ObjectSet<Cliente> clientes = db.query(Cliente.class);
+            for (Cliente cliente : clientes) {
+                System.out.println(cliente);
+            }
+
+        } catch(Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+
+    }
+
+
+
     public static void borrarCliente(Cliente aborrar) {
         ObjectSet<Cliente> os = find(aborrar);
         if ( os != null ) {

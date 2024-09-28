@@ -32,4 +32,11 @@ public class Cliente
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente " +'\''+
+                "id=" + id +'\''+
+                "descripcion='" + descripcion + '\'';
+    }
 }

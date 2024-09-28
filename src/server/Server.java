@@ -1,5 +1,6 @@
 package server;
 
+import utils.Consola;
 import utils.Util;
 
 public class Server {
@@ -7,3 +8,4 @@ public class Server {
         Util.initServer();
     }
 }
+

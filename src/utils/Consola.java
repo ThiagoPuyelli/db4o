@@ -9,41 +9,39 @@ public class Consola {
 
     private Scanner sc = new Scanner(System.in);
 
-    public void inicializarConsola(){
+    public void iniciarConsola(){
        String input;
        input="-1";
+       Util.initClient();
 
         do{
             menu();
+            input = sc.nextLine();
             switch (input){
                 case "0":
                     break;
                 case "1":
-                    System.out.println("Finalizo el programa");
+                    altaCliente();
                     break;
                 case "2":
-                    System.out.println("Finalizo el programa");
                     break;
                 case "3":
-                    System.out.println("Finalizo el programa");
                     break;
                 case "4":
-                    System.out.println("Finalizo el programa");
+                    mostrarClientes();
                     break;
                 case "5":
-                    System.out.println("Finalizo el programa");
                     break;
                 case "6":
-                    System.out.println("Finalizo el programa");
                     break;
                 case "7":
-                    System.out.println("Finalizo el programa");
                     break;
                 case "8":
-                    System.out.println("Finalizo el programa");
                     break;
+                default:
+                    System.out.println("Ingrese una opcion correcta (0-8)");
             }
-            input = sc.nextLine();
+            continuar();
          }
         while (!Objects.equals(input, "0"));
     }
@@ -56,6 +54,10 @@ public class Consola {
        String descripcion  = sc.nextLine();
        Util.agregarCliente(new Cliente(id,descripcion));
    }
+
+    private  void  mostrarClientes(){
+        Util.mostrarClientes();
+    }
 
 
    private int tomarNumero(){
@@ -86,5 +88,9 @@ public class Consola {
         System.out.println("7 - Borrar Factura");
         System.out.println("8 - Mostrar Facturas");
 
+    }
+    private  void continuar(){
+        System.out.println("presionar enter");
+        sc.nextLine();
     }
 }
