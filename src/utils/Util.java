@@ -14,7 +14,7 @@ import entidades.Cliente;
  * @version 1.0
  */
 
-/*
+
 public class Util
 {
     private static ObjectContainer db = null;
@@ -51,9 +51,9 @@ public class Util
     public static void fin() {
         System.exit(0);
     }
-    public static void insert(Cliente nuevo) {
+    public static void agregarCliente(Cliente nuevo) {
         try {
-            Cliente found = findFirst(new Cliente(nuevo.getId()));
+            Cliente found = findFirst(new Cliente(nuevo.getId(),nuevo.getDescripcion()));
             if ( found != null && found.getId() == nuevo.getId() )
                 found.setDescripcion(nuevo.getDescripcion());
             else found = nuevo;
@@ -64,7 +64,7 @@ public class Util
         }
 
     }
-    public static void delete(Cliente aborrar) {
+    public static void borrarCliente(Cliente aborrar) {
         ObjectSet<Cliente> os = find(aborrar);
         if ( os != null ) {
             while(os.hasNext()) {
@@ -112,7 +112,7 @@ public class Util
             while(os.hasNext()) {
                 found = os.next();
                 sb.append("Id: "+found.getId()+
-                        "\nNombre:"+found.getDescripcion()+
+                        "\n"+ "Descripcion:"+found.getDescripcion());
                 System.out.println("list(os)!="+sb.toString());
             }
         } catch(Exception ex) {
@@ -176,7 +176,7 @@ public class Util
      * Listado de prueba
      */
 
-/*
+
     public static StringBuilder listTest() {
         StringBuilder sb = new StringBuilder();
         try {
@@ -196,4 +196,3 @@ public class Util
 }
 
 
-*/

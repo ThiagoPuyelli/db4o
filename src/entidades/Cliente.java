@@ -14,6 +14,7 @@ public class Cliente
         // initialise instance variables
        this.id=id;
        this.descripcion=descripcion;
+
     }
 
     public int getId() {

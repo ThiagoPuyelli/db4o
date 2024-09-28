@@ -1,21 +1,82 @@
 package utils;
 
+import entidades.Cliente;
+
+import java.util.Objects;
+import java.util.Scanner;
+
 public class Consola {
 
-    public void inicializarConsola(){
+    private Scanner sc = new Scanner(System.in);
 
-       int input;
-       input=-1;
-       menu();
+    public void inicializarConsola(){
+       String input;
+       input="-1";
 
         do{
-
+            menu();
+            switch (input){
+                case "0":
+                    break;
+                case "1":
+                    System.out.println("Finalizo el programa");
+                    break;
+                case "2":
+                    System.out.println("Finalizo el programa");
+                    break;
+                case "3":
+                    System.out.println("Finalizo el programa");
+                    break;
+                case "4":
+                    System.out.println("Finalizo el programa");
+                    break;
+                case "5":
+                    System.out.println("Finalizo el programa");
+                    break;
+                case "6":
+                    System.out.println("Finalizo el programa");
+                    break;
+                case "7":
+                    System.out.println("Finalizo el programa");
+                    break;
+                case "8":
+                    System.out.println("Finalizo el programa");
+                    break;
+            }
+            input = sc.nextLine();
          }
-        while (input!=0);
+        while (!Objects.equals(input, "0"));
     }
 
-    public void menu(){
-        System.out.println("0 - Salir");
+
+   private  void  altaCliente(){
+       System.out.println("Ingresar id de cliente");
+       int id = tomarNumero();
+       System.out.println("Ingresar descripcion");
+       String descripcion  = sc.nextLine();
+       Util.agregarCliente(new Cliente(id,descripcion));
+   }
+
+
+   private int tomarNumero(){
+       int numero = 0;
+       boolean valido = false;
+
+       while (!valido) {
+           System.out.print("Por favor, ingrese un número entero: ");
+           try {
+               numero = Integer.parseInt(sc.nextLine());
+               valido = true;
+           } catch (NumberFormatException e) {
+               System.out.println("Error: Entrada no válida. Debe ingresar un número entero.");
+           }
+   }
+       return numero;
+   }
+
+
+    private void menu(){
+        System.out.println("0 - Salir del Programa");
         System.out.println("1 - Altar Cliente");
         System.out.println("2 - Modificar Cliente");
         System.out.println("3 - Borrar Cliente");
