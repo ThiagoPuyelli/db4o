@@ -1,7 +1,3 @@
-import View.View;
-import client.Client;
-import server.Server;
-import utils.Util;
 import View.Consola;
 
 public class Main {
