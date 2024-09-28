@@ -1,39 +1,34 @@
 
 package entidades;
-/**
- * Clase POJO simple a persistir en db4o
- *
- * @author G.Cherencio
- * @version 1.0
- */
+
+
 public class Cliente
 {
     // instance variables - replace the example below with your own
-    private int codigo;
-    private String nombre;
-    private double saldo = 0.0;
+    private int id;
+    private String descripcion;
 
-    public Cliente()
+
+    public Cliente(int id, String descripcion)
     {
         // initialise instance variables
-        this(0,null);
-    }
-    public Cliente(int c) {
-        this(c,null);
-    }
-    public Cliente(int c,String n) {
-        this(c,n,0.0);
+       this.id=id;
+       this.descripcion=descripcion;
     }
 
-    public Cliente(int c,String n,double s) {
-        setCodigo(c);setNombre(n);setSaldo(s);
+    public int getId() {
+        return id;
     }
 
-    public int getCodigo() { return codigo; }
-    public String getNombre() { return nombre; }
-    public double getSaldo() { return saldo; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public void setCodigo(int n) { codigo = n; }
-    public void setNombre(String n) { nombre = n; }
-    public void setSaldo(double s) { saldo = s; }
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

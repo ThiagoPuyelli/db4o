@@ -1,3 +1,4 @@
+
 package utils;
 import com.db4o.*;
 import com.db4o.cs.*;
@@ -12,6 +13,8 @@ import entidades.Cliente;
  * @author G. Cherencio
  * @version 1.0
  */
+
+/*
 public class Util
 {
     private static ObjectContainer db = null;
@@ -50,9 +53,9 @@ public class Util
     }
     public static void insert(Cliente nuevo) {
         try {
-            Cliente found = findFirst(new Cliente(nuevo.getCodigo()));
-            if ( found != null && found.getCodigo() == nuevo.getCodigo() )
-                found.setNombre(nuevo.getNombre());
+            Cliente found = findFirst(new Cliente(nuevo.getId()));
+            if ( found != null && found.getId() == nuevo.getId() )
+                found.setDescripcion(nuevo.getDescripcion());
             else found = nuevo;
             Util.getDb().store(found);
             Util.getDb().commit();
@@ -108,9 +111,8 @@ public class Util
             Cliente found = null;
             while(os.hasNext()) {
                 found = os.next();
-                sb.append("Codigo: "+found.getCodigo()+
-                        "\nNombre:"+found.getNombre()+
-                        "\nSaldo:"+found.getSaldo()+"\n================\n");
+                sb.append("Id: "+found.getId()+
+                        "\nNombre:"+found.getDescripcion()+
                 System.out.println("list(os)!="+sb.toString());
             }
         } catch(Exception ex) {
@@ -173,6 +175,8 @@ public class Util
     /**
      * Listado de prueba
      */
+
+/*
     public static StringBuilder listTest() {
         StringBuilder sb = new StringBuilder();
         try {
@@ -190,3 +194,6 @@ public class Util
     }
 
 }
+
+
+*/
