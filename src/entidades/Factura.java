@@ -6,9 +6,9 @@ public class Factura {
     private int id;
     private Double importe;
 
-    public Factura(int nro, int id, Double importe) {
-        this.nro = nro;
-        this.id = id;
+    public Factura(int nrof, int idc, Double importe) {
+        this.nro = nrof;
+        this.id = idc;
         this.importe = importe;
     }
 
@@ -34,5 +34,14 @@ public class Factura {
 
     public void setImporte(Double importe) {
         this.importe = importe;
+    }
+
+    @Override
+    public String toString() {
+        return "Factura{" +
+                "nro=" + nro +
+                ", id=" + id +
+                ", importe=" + importe +
+                '}';
     }
 }

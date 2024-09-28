@@ -1,9 +1,13 @@
 package utils;
 
 import entidades.Cliente;
+import entidades.Factura;
 
 import java.util.Objects;
 import java.util.Scanner;
+
+import static utils.Validacion.tomarNumero;
+import static utils.Validacion.tomarNumeroDouble;
 
 public class Consola {
 
@@ -33,12 +37,16 @@ public class Consola {
                     mostrarClientes();
                     break;
                 case "5":
+                    altaFactura();
                     break;
                 case "6":
+                    modificarFactura();
                     break;
                 case "7":
+                    borrarFactura();
                     break;
                 case "8":
+                    mostrarFacturas();
                     break;
                 default:
                     System.out.println("Ingrese una opcion correcta (0-8)");
@@ -51,7 +59,7 @@ public class Consola {
 
    private  void  altaCliente(){
        System.out.println("Ingresar id de cliente");
-       int id = tomarNumero();
+       int id = tomarNumero(sc);
        System.out.println("Ingresar descripcion");
        String descripcion  = sc.nextLine();
        Util.agregarCliente(new Cliente(id,descripcion));
@@ -59,14 +67,14 @@ public class Consola {
 
     private  void  borrarCliente(){
         System.out.println("Ingresar id de cliente a borrar");
-        int id = tomarNumero();
+        int id = tomarNumero(sc);
         Util.borrarCliente(new Cliente(id,null));
     }
 
 
     private  void  modificarCliente(){
         System.out.println("Ingresar una id para modificar");
-        int id = tomarNumero();
+        int id = tomarNumero(sc);
         Util.modificarCliente(new Cliente(id,null), sc);
     }
 
@@ -77,30 +85,44 @@ public class Consola {
 
 
 
-   private int tomarNumero(){
-       int numero = 0;
-       boolean valido = false;
 
-       while (!valido) {
-           System.out.print("Por favor, ingrese un número entero: ");
-           try {
-               numero = Integer.parseInt(sc.nextLine());
-               valido = true;
-           } catch (NumberFormatException e) {
-               System.out.println("Error: Entrada no válida. Debe ingresar un número entero.");
-           }
-   }
-       return numero;
-   }
+    private  void  altaFactura(){
+        int nroF = tomarNumero(sc);
+        int idC  = tomarNumero(sc);
+        double importe = tomarNumeroDouble(sc);
+        Factura f= new Factura(nroF,idC,importe);
+        Util.agregarFactura(f);
+    }
+
+
+    private  void  mostrarFacturas(){
+        Util.mostrarFacturas();
+    }
+
+    private  void  modificarFactura(){
+        System.out.println("Ingresar un Nro de factura para modificar");
+        int nro = tomarNumero(sc);
+        Util.modificarFactura(new Factura(nro,0,null), sc);
+    }
+
+
+    private  void  borrarFactura(){
+        System.out.println("Ingresar nro de factura a borrar");
+        int nro = tomarNumero(sc);
+        Util.borrarFactura(new Factura(nro,0,null));
+    }
+
+
+
 
 
     private void menu(){
         System.out.println("0 - Salir del Programa");
-        System.out.println("1 - Altar Cliente");
+        System.out.println("1 - Alta Cliente");
         System.out.println("2 - Modificar Cliente");
         System.out.println("3 - Borrar Cliente");
         System.out.println("4 - Mostrar Clientes");
-        System.out.println("5 - Altar Factura");
+        System.out.println("5 - Alta Factura");
         System.out.println("6 - Modificar Factura");
         System.out.println("7 - Borrar Factura");
         System.out.println("8 - Mostrar Facturas");

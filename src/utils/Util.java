@@ -4,8 +4,11 @@ import com.db4o.*;
 import com.db4o.cs.*;
 import com.db4o.query.*;
 import entidades.Cliente;
+import entidades.Factura;
 
 import java.util.Scanner;
+
+import static utils.Validacion.tomarNumeroDouble;
 
 
 /**
@@ -105,7 +108,7 @@ public class Util
         }
     }
 
-    public static Cliente modificarCliente(Cliente modificado, Scanner sc) {
+    public static  void  modificarCliente(Cliente modificado, Scanner sc) {
         Cliente encontrado = buscarCliente(modificado.getId());
         try {
             if (encontrado!=null){
@@ -122,7 +125,6 @@ public class Util
         } catch(Exception ex) {
             System.err.println(ex.getMessage());
         }
-        return encontrado;
 
     }
 
@@ -152,112 +154,106 @@ public class Util
 
 
 
-
-
-
-
-
-    public static ObjectSet<Cliente> find(Cliente c) {
-        ObjectSet<Cliente> os = null;
+    public static void agregarFactura(Factura nuevo) {
         try {
-            os = getDb().queryByExample(c);
-        } catch(Exception ex) {
-            System.out.println("**error**");
-            System.err.println(ex.getMessage());
-            System.out.println("**fin error**");
-        }
-        return os;
-    }
-    public static StringBuilder list(Cliente c) {
-        return list(find(c));
-    }
-    public static StringBuilder list(ObjectSet<Cliente> os) {
-        StringBuilder sb = new StringBuilder();
-        try {
-            Cliente found = null;
-            while(os.hasNext()) {
-                found = os.next();
-                sb.append("Id: "+found.getId()+
-                        "\n"+ "Descripcion:"+found.getDescripcion());
-                System.out.println("list(os)!="+sb.toString());
+
+            Factura encontrado = buscarFactura(nuevo.getNro());
+            if ( encontrado != null ){
+                System.out.println("La factura ya se encuentra");
+            }
+            else{
+                Cliente c = buscarCliente(nuevo.getId());
+                if (c!=null){
+                    encontrado=nuevo;
+                    Util.getDb().store(encontrado);
+                    Util.getDb().commit();
+                    System.out.println("Factura agregada exitosamente!");
+                }
+                else {
+                    System.out.println("No existe el cliente con la id "+nuevo.getId());
+                }
+
             }
         } catch(Exception ex) {
             System.err.println(ex.getMessage());
         }
-        return sb;
+
     }
-    public static void deleteAll() {
+
+
+    public static void mostrarFacturas() {
         try {
-            ObjectSet<Object> os = getDb().queryByExample(new Object());
-            while(os.hasNext()) {
-                getDb().delete(os.next());
+            ObjectSet<Factura> facturas = db.query(Factura.class);
+            for (Factura f : facturas) {
+                System.out.println(f);
             }
-            getDb().commit();
+
         } catch(Exception ex) {
             System.err.println(ex.getMessage());
         }
+
     }
-    public static StringBuilder listNotName(String nombre) {
-        StringBuilder sb = new StringBuilder();
+
+    public static void modificarFactura(Factura modificado, Scanner sc) {
+        Factura encontrado = buscarFactura(modificado.getNro());
         try {
-            Query query = getDb().query();
-            query.constrain(Cliente.class);
-            query.descend("nombre").constrain(nombre).not();
-            ObjectSet<Cliente> os = query.execute();
-            sb=list(os);
+            if (encontrado!=null){
+                System.out.println("Ingrese nuevo importe");
+                double importe = tomarNumeroDouble(sc);
+                encontrado.setImporte(importe);
+                db.store(encontrado);
+                System.out.println("Factura modificada exitosamente");
+            }
+            else {
+                System.out.println("No existe la Factura con el nro "+ modificado.getNro());
+            }
+
         } catch(Exception ex) {
             System.err.println(ex.getMessage());
         }
-        return sb;
-    }
-    public static StringBuilder listGtCodigo(int codigo) {
-        StringBuilder sb = new StringBuilder();
-        try {
-            Query query = getDb().query();
-            query.constrain(Cliente.class);
-            query.descend("codigo").constrain(codigo).greater();
-            ObjectSet<Cliente> os = query.execute();
-            sb=list(os);
-        } catch(Exception ex) {
-            System.err.println(ex.getMessage());
-        }
-        return sb;
-    }
-    public static StringBuilder listGtCodigoAndLike(int codigo,String nombre) {
-        StringBuilder sb = new StringBuilder();
-        try {
-            Query query = getDb().query();
-            query.constrain(Cliente.class);
-            query.descend("codigo").constrain(codigo).greater().and(
-                    query.descend("nombre").constrain(nombre).like()
-            );
-            ObjectSet<Cliente> os = query.execute();
-            sb=list(os);
-        } catch(Exception ex) {
-            System.err.println(ex.getMessage());
-        }
-        return sb;
-    }
-    /**
-     * Listado de prueba
-     */
 
 
-    public static StringBuilder listTest() {
-        StringBuilder sb = new StringBuilder();
+    }
+
+
+
+    public static Factura buscarFactura(int nro) {
+        Factura encontrado = null;
         try {
-            Query query = getDb().query();
-            query.constrain(Cliente.class);
-            query.descend("codigo").constrain(0).greater().and(
-                    query.descend("codigo").constrain(100).greater().not()
-            ).or(query.descend("saldo").constrain(1000).greater().not());
-            ObjectSet<Cliente> os = query.execute();
-            sb=list(os);
+            Query query = db.query();
+            query.constrain(Factura.class);
+            query.descend("nro").constrain(nro);
+            ObjectSet<Factura> resultados = query.execute();
+            if (!resultados.isEmpty()) {
+                encontrado= resultados.get(0);
+            }
+
         } catch(Exception ex) {
             System.err.println(ex.getMessage());
         }
-        return sb;
+        return encontrado;
+
     }
+
+
+    public static void borrarFactura(Factura aborrar) {
+        Factura factura= buscarFactura(aborrar.getNro());
+        if ( factura != null ) {
+            try {
+                getDb().delete(factura);
+                getDb().commit();
+                System.out.println("Factura borrada exitosamente");
+            } catch(Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+        else {
+            System.out.println("La Factura no existe!");
+        }
+    }
+
+
+
 
 }
 
