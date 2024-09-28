@@ -5,6 +5,8 @@ import com.db4o.cs.*;
 import com.db4o.query.*;
 import entidades.Cliente;
 
+import java.util.Scanner;
+
 
 /**
  * Esta clase encapsula las operaciones para persistir a clientes 
@@ -103,6 +105,28 @@ public class Util
         }
     }
 
+    public static Cliente modificarCliente(Cliente modificado, Scanner sc) {
+        Cliente encontrado = buscarCliente(modificado.getId());
+        try {
+            if (encontrado!=null){
+                System.out.println("Ingrese nueva descripcion");
+                String descripcion = sc.nextLine();
+                encontrado.setDescripcion(descripcion);
+                db.store(encontrado);
+                System.out.println("Cliente modificado exitosamente");
+            }
+            else {
+                System.out.println("No existe el cliente con la id "+ modificado.getId());
+            }
+
+        } catch(Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+        return encontrado;
+
+    }
+
+
     public static Cliente buscarCliente(int id) {
         Cliente encontrado = null;
         try {
@@ -120,6 +144,19 @@ public class Util
         return encontrado;
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
     public static ObjectSet<Cliente> find(Cliente c) {
         ObjectSet<Cliente> os = null;
         try {

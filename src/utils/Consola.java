@@ -24,7 +24,7 @@ public class Consola {
                     altaCliente();
                     break;
                 case "2":
-                    break;
+                    modificarCliente();
                 case "3":
                     borrarCliente();
                 case "4":
@@ -55,15 +55,24 @@ public class Consola {
        Util.agregarCliente(new Cliente(id,descripcion));
    }
 
-    private  void  mostrarClientes(){
-        Util.mostrarClientes();
-    }
-
     private  void  borrarCliente(){
         System.out.println("Ingresar id de cliente a borrar");
         int id = tomarNumero();
         Util.borrarCliente(new Cliente(id,null));
     }
+
+
+    private  void  modificarCliente(){
+        System.out.println("Ingresar una id para modificar");
+        int id = tomarNumero();
+        Util.modificarCliente(new Cliente(id,null), sc);
+    }
+
+
+    private  void  mostrarClientes(){
+        Util.mostrarClientes();
+    }
+
 
 
    private int tomarNumero(){
