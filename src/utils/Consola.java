@@ -25,8 +25,10 @@ public class Consola {
                     break;
                 case "2":
                     modificarCliente();
+                    break;
                 case "3":
                     borrarCliente();
+                    break;
                 case "4":
                     mostrarClientes();
                     break;
